@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <a class="navbar-brand text-light" href="#">Barbearia</a>
       <ul class="navbar-nav">
         <li class="nav-item active">
@@ -85,4 +85,7 @@ export default {
 </script>
 
 <style scoped>
+nav {
+  width: 100%;
+}
 </style>
