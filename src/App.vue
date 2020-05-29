@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    Projeto Barbearia
+    <Login />
   </div>
 </template>
 
 <script>
+import Login from './components/Login.vue';
 
 export default {
   name: 'App',
+  components: {
+    Login,
+  }
 }
 </script>
 
