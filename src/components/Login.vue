@@ -30,6 +30,7 @@
 
 
 <script>
+
 export default {
   name: "Login",
   data: function() {
@@ -55,9 +56,9 @@ export default {
         .then(res => res.json())
         .then(res => {
           if (res.access_token) {
-            console.log("Token encontrado");
             this.incorrectLogin = false;
             localStorage.setItem('Jwt', res.access_token);
+            this.$router.push('/home');
           } else {
             this.incorrectLogin = true;
           }
