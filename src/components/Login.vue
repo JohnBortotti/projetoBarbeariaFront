@@ -24,7 +24,7 @@
         class="btn btn-info btn-block my-4 btn-dark"
         v-on:click.prevent="fetchLogin(name, password)"
       >Logar</button>
-      <p v-if="incorrectLogin == true" class="text-danger text-center">Login Incorreto</p>
+      <div v-if="incorrectLogin == true" class="alert alert-danger text-center" role="alert">Login Incorreto</div>
     </form>
   </div>
 </template>
