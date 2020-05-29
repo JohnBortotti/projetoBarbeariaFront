@@ -4,7 +4,7 @@
       <a class="navbar-brand text-light" href="#">Barbearia
       </a>
     </nav>
-    <form class="col-md-5">
+    <form class="col-md-5" @submit.prevent="fetchLogin(name, password)">
       <p class="h4 mb-4 text-center">Login</p>
       <input
         v-model="name"
@@ -22,8 +22,7 @@
       />
       <button
         class="btn btn-info btn-block my-4 btn-dark"
-        v-on:click.prevent="fetchLogin(name, password)"
-      >Logar</button>
+        >Logar</button>
       <div v-if="incorrectLogin == true" class="alert alert-danger text-center" role="alert">Login Incorreto</div>
     </form>
   </div>
