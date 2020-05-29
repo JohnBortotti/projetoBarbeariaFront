@@ -57,6 +57,7 @@ export default {
           if (res.access_token) {
             console.log("Token encontrado");
             this.incorrectLogin = false;
+            localStorage.setItem('Jwt', res.access_token);
           } else {
             this.incorrectLogin = true;
           }
