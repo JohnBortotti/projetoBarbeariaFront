@@ -12,35 +12,42 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Usuários</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" v-on:click="logout()">Sair</a>
+        </li>
       </ul>
     </nav>
     <h4 class="p-5 text-center text-secondary">Serviços</h4>
     <div class="table-responsive-sm">
-    <table class="table table-dark w-75 mx-auto">
-      <thead>
-        <tr>
-          <th scope="col">Cliente</th>
-          <th scope="col">Profissional</th>
-          <th scope="col">Status</th>
-          <th scope="col">Data</th>
-          <th scope="col">Horário</th>
-          <th scope="col">Controles</th>
-        </tr>
-        <tr v-for="service in services" :key="service.id">
-          <th scope="col">{{ service.client_name }}</th>
-          <th scope="col">{{ service.user_name }}</th>
-          <th scope="col">{{ service.status }}</th>
-          <th scope="col">{{ service.data}}</th>
-          <th scope="col">{{service.horario}}</th>
-          <th scope="col">
-            <div>
-              <button type="button" class="btn btn-sm btn-success" style="margin-right: 10px">Concluido</button>
-              <button type="button" class="btn btn-sm btn-danger">Deletar</button>
-            </div>
-          </th>
-        </tr>
-      </thead>
-    </table>
+      <table class="table table-dark w-75 mx-auto">
+        <thead>
+          <tr>
+            <th scope="col">Cliente</th>
+            <th scope="col">Profissional</th>
+            <th scope="col">Status</th>
+            <th scope="col">Data</th>
+            <th scope="col">Horário</th>
+            <th scope="col">Controles</th>
+          </tr>
+          <tr v-for="service in services" :key="service.id">
+            <th scope="col">{{ service.client_name }}</th>
+            <th scope="col">{{ service.user_name }}</th>
+            <th scope="col">{{ service.status }}</th>
+            <th scope="col">{{ service.data}}</th>
+            <th scope="col">{{service.horario}}</th>
+            <th scope="col">
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  style="margin-right: 10px"
+                >Concluido</button>
+                <button type="button" class="btn btn-sm btn-danger">Deletar</button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
     </div>
   </div>
 </template>
@@ -69,6 +76,14 @@ export default {
           }
         });
     },
+    logout: async function() {
+      // Executa o post na rota logout
+      await fetch(this.baseUrl + "auth/logout", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      }).then(this.verifyToken); // Executa uma nova verificação do token após a resolução da promise;
+
+    },
     fetchUsers: function() {
       fetch(this.baseUrl + "service", {
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
@@ -87,5 +102,9 @@ export default {
 <style scoped>
 nav {
   width: 100%;
+}
+
+a {
+  cursor: pointer;
 }
 </style>
