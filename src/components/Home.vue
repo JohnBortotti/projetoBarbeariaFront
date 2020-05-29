@@ -1,5 +1,48 @@
 <template>
-  <div>home</div>
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand text-light" href="#">Barbearia</a>
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Serviços</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Usuários</a>
+        </li>
+      </ul>
+    </nav>
+    <h4 class="p-5 text-center text-secondary">Serviços</h4>
+    <div class="table-responsive-sm">
+    <table class="table table-dark w-75 mx-auto">
+      <thead>
+        <tr>
+          <th scope="col">Cliente</th>
+          <th scope="col">Profissional</th>
+          <th scope="col">Status</th>
+          <th scope="col">Data</th>
+          <th scope="col">Horário</th>
+          <th scope="col">Controles</th>
+        </tr>
+        <tr v-for="service in services" :key="service.id">
+          <th scope="col">{{ service.client_name }}</th>
+          <th scope="col">{{ service.user_name }}</th>
+          <th scope="col">{{ service.status }}</th>
+          <th scope="col">{{ service.data}}</th>
+          <th scope="col">{{service.horario}}</th>
+          <th scope="col">
+            <div>
+              <button type="button" class="btn btn-sm btn-success" style="margin-right: 10px">Concluido</button>
+              <button type="button" class="btn btn-sm btn-danger">Deletar</button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+    </table>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -7,7 +50,8 @@ export default {
   name: "Home",
   data: function() {
     return {
-      baseUrl: "http://localhost:8000/api/"
+      baseUrl: "http://localhost:8000/api/",
+      services: []
     };
   },
   methods: {
@@ -19,14 +63,26 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-          if (!res.id) { // verifica se há um id na resposta, se não houver, redireciona para o login
+          if (!res.id) {
+            // verifica se há um id na resposta, se não houver, redireciona para o login
             this.$router.push("/");
           }
         });
+    },
+    fetchUsers: function() {
+      fetch(this.baseUrl + "service", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      })
+        .then(res => res.json())
+        .then(res => (this.services = res));
     }
   },
   mounted: function() {
     this.verifyToken();
+    this.fetchUsers();
   }
 };
 </script>
+
+<style scoped>
+</style>
