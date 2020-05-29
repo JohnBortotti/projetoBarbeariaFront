@@ -18,12 +18,22 @@
       </ul>
     </nav>
     <h4 class="p-5 text-center text-secondary">Serviços</h4>
+    <div class="row justify-content-md-center">
+      <!--- button center wrapper -->
+      <button 
+        type="button"
+        v-on:click="function(){$router.push('/servicesform')}"   
+        class="btn btn-primary col-2 mb-4"
+      >Novo Serviço</button>
+    </div>
+    <!--- redireciona para o ServicosForm -->
     <div class="table-responsive-sm">
       <table class="table table-dark w-75 mx-auto">
         <thead>
           <tr>
             <th scope="col">Cliente</th>
             <th scope="col">Profissional</th>
+            <th scope="col">Serviço</th>
             <th scope="col">Status</th>
             <th scope="col">Data</th>
             <th scope="col">Horário</th>
@@ -32,6 +42,7 @@
           <tr v-for="service in services" :key="service.id">
             <th scope="col">{{ service.client_name }}</th>
             <th scope="col">{{ service.user_name }}</th>
+            <th scope="col">{{ service.servico }}</th>
             <th scope="col">{{ service.status }}</th>
             <th scope="col">{{ service.data}}</th>
             <th scope="col">{{service.horario}}</th>
@@ -82,19 +93,19 @@ export default {
         method: "POST",
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
       }).then(this.verifyToken); // Executa uma nova verificação do token após a resolução da promise;
-
     },
-    fetchUsers: function() {
+    fetchServices: function() {
+      // Busca todos os
       fetch(this.baseUrl + "service", {
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
       })
         .then(res => res.json())
-        .then(res => (this.services = res));
+        .then(res => (this.services = res)); // Adiciona o array da resosta como valor no services
     }
   },
   mounted: function() {
     this.verifyToken();
-    this.fetchUsers();
+    this.fetchServices();
   }
 };
 </script>
