@@ -35,15 +35,29 @@ export default {
   name: "Login",
   data: function() {
     return {
-      baseUrl: "http://localhost:8000/",
+      baseUrl: "http://localhost:8000/api/",
       name: null,
       password: null,
       incorrectLogin: false
     };
   },
   methods: {
+        verifyToken: function() {
+      // verifica se existem um token, caso exista redireciona para a home
+      fetch(this.baseUrl + "auth/me", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.id) {
+            // verifica se há um id na resposta, se houver, redireciona para a home
+            this.$router.push("/home");
+          }
+        });
+    },
     fetchLogin: function(name, password) {
-      fetch(this.baseUrl + "api/auth/login", {
+      fetch(this.baseUrl + "auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -64,6 +78,9 @@ export default {
           }
         });
     }
+  },
+  mounted: function() {
+    this.verifyToken()
   }
 };
 </script>
