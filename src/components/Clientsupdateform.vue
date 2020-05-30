@@ -89,3 +89,24 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+div {
+  max-width: 100%;
+  max-height: 100% !important;
+  background-color: rgb(247, 247, 247);
+}
+
+@media screen and (max-width: 700px) {
+  form {
+    margin: 0 10%;
+  }
+  .w-25 {
+    width: 100% !important;
+  }
+}
+.btn-danger {
+  width: 100px !important;
+  max-width: 100% !important;
+}
+</style>
