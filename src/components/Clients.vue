@@ -14,6 +14,34 @@
         </li>
       </ul>
     </nav>
+    <h4 class="p-5 text-center text-secondary">Clientes</h4>
+    <div class="row justify-content-md-center">
+      <!--- button center wrapper -->
+      <button
+        type="button"
+        v-on:click="function(){$router.push('/clientesform')}"
+        id="novoServicoButton"
+        class="btn btn-info col-2 mb-4"
+      >Atualizar Cliente</button>
+    </div>
+    <div class="table-responsive-sm">
+      <table class="table w-75 mx-auto table-dark">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Email</th>
+          </tr>
+          <tr v-for="client in clients" :key="client.id" v-bind:id="client.id">
+            <th scope="col">{{ client.id }}</th>
+            <th scope="col">{{ client.name }}</th>
+            <th scope="col">{{ client.phone }}</th>
+            <th scope="col">{{ client.email }}</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -22,7 +50,8 @@ export default {
   name: "Clients",
   data: function() {
     return {
-      baseUrl: "http://localhost:8000/api/"
+      baseUrl: "http://localhost:8000/api/",
+      clients: []
     };
   },
   methods: {
@@ -46,10 +75,18 @@ export default {
         method: "POST",
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
       }).then(this.verifyToken); // Executa uma nova verificação do token após a resolução da promise;
+    },
+    fetchClients: async function() {
+      fetch(this.baseUrl + "client", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      })
+        .then(res => res.json())
+        .then(res => (this.clients = res));
     }
   },
   mounted: function() {
     this.verifyToken();
+    this.fetchClients();
   }
 };
 </script>
