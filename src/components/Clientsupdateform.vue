@@ -3,11 +3,11 @@
     <button
       type="button"
       class="btn btn-danger col-1 p-1 m-4"
-      v-on:click="function(){$router.push('/home')}"
+      v-on:click="function(){$router.push('/clients')}"
     >Voltar</button>
     <div class="row justify-content-sm-center">
-      <form class="w-25" @submit.prevent="updateClient(client_id, name, phone), email">
-        <h3 class="mb-5 text-center">Novo Cliente</h3>
+      <form class="w-25" @submit.prevent="updateClient(client_id, name, phone, email)">
+        <h3 class="mb-5 text-center">Atualizar Cliente</h3>
         <div class="form-group">
           <label>Cliente ID</label>
           <input
@@ -20,15 +20,15 @@
         </div>
         <div class="form-group">
           <label>Nome</label>
-          <input class="form-control" v-model="name" placeholder="insira o nome" />
+          <input class="form-control" v-model="name" placeholder="insira o nome" required />
         </div>
         <div class="form-group">
           <label>Telefone</label>
-          <input class="form-control" v-model="phone" placeholder="insira o telefone" />
+          <input class="form-control" v-model="phone" placeholder="insira o telefone" required />
         </div>
         <div class="form-group">
           <label>Email</label>
-          <input class="form-control" v-model="email" placeholder="insira o email" />
+          <input class="form-control" v-model="email" placeholder="insira o email" required />
         </div>
         <div class="row justify-content-md-center">
           <!-- button wrapper para centralizar o button na div -->
@@ -76,6 +76,14 @@ export default {
           phone: phone,
           email: email
         })
+      }).then(res => {
+        if (res.status == 404) {
+          this.fail = true;
+          this.success = false;
+        } else {
+            this.success = true;
+            this.fail = false;
+        }
       });
     }
   }
