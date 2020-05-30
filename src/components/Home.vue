@@ -111,6 +111,9 @@ export default {
 </script>
 
 <style scoped>
+div {
+  max-width: 100%;
+}
 nav {
   width: 100%;
 }
