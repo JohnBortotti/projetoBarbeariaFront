@@ -25,7 +25,7 @@
       >Novo Cliente</button>
       <button
         type="button"
-        v-on:click="function(){$router.push('/clientesupdateform')}"
+        v-on:click="function(){$router.push('/clientsupdateform')}"
         id="novoServicoButton"
         class="btn btn-info col-2 mb-4"
       >Atualizar Cliente</button>
@@ -98,6 +98,9 @@ export default {
 </script>
 
 <style scoped>
+div {
+    max-width: 100%;
+}
 a {
   cursor: pointer;
 }
