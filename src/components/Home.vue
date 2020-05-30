@@ -7,8 +7,7 @@
           <a class="nav-link" href="#">Serviços</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" 
-          v-on:click="function(){$router.push('/clients')}">Clientes</a>
+          <a class="nav-link" v-on:click="function(){$router.push('/clients')}">Clientes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" v-on:click="logout()">Sair</a>
@@ -49,7 +48,12 @@
         >Aplicar</button>
       </form>
     </div>
-    <div class="table-responsive-sm">
+    <div v-if="services.length == 0" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div v-else class="table-responsive-sm">
       <table class="table w-75 mx-auto table-dark">
         <thead>
           <tr>
@@ -62,6 +66,7 @@
             <th scope="col">Horário</th>
             <th scope="col">Controles</th>
           </tr>
+
           <tr v-for="service in services" :key="service.id" v-bind:id="service.id">
             <th scope="col">{{ service.id }}</th>
             <th scope="col">{{ service.client_name }}</th>
