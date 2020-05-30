@@ -30,6 +30,13 @@
         class="btn btn-info col-2 mb-4"
       >Atualizar Cliente</button>
     </div>
+    <div class="row justify-content-md-center">
+      <div
+      v-if="fail == true"
+        class="alert alert-danger w-50"
+        role="alert"
+      >Não é possivel deletar clientes com serviços registrados!</div>
+    </div>
     <div class="table-responsive-sm">
       <table class="table w-75 mx-auto table-dark">
         <thead>
@@ -68,7 +75,8 @@ export default {
   data: function() {
     return {
       baseUrl: "http://localhost:8000/api/",
-      clients: []
+      clients: [],
+      fail: false,
     };
   },
   methods: {
@@ -104,8 +112,13 @@ export default {
       await fetch(this.baseUrl + `client/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
-      })
-      .then(this.fetchClients)
+      }).then(res => {
+        if (res.status == 500) {
+          this.fail = true
+        } else {
+          this.fetchClients();
+        }
+      });
     }
   },
   mounted: function() {
