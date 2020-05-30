@@ -19,7 +19,13 @@
       <!--- button center wrapper -->
       <button
         type="button"
-        v-on:click="function(){$router.push('/clientesform')}"
+        v-on:click="function(){$router.push('/clientesnewform')}"
+        id="novoServicoButton"
+        class="btn btn-success col-2 mb-4 mr-2"
+      >Novo Cliente</button>
+      <button
+        type="button"
+        v-on:click="function(){$router.push('/clientesupdateform')}"
         id="novoServicoButton"
         class="btn btn-info col-2 mb-4"
       >Atualizar Cliente</button>
