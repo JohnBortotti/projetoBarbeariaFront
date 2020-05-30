@@ -10,6 +10,7 @@ import ServicosForm from './components/ServicosForm';
 
 import Clients from './components/Clients';
 import Clientsupdateform from './components/Clientsupdateform';
+import Clientsnewform from './components/Clientsnewform';
 // Import the styles directly. (Or you could add them via script tags.)
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -25,6 +26,7 @@ const routes = [ // define as rotas e os componentes
   { path: '/servicesform', component: ServicosForm},
   { path: '/clients', component: Clients},
   { path: '/clientsupdateform', component: Clientsupdateform},
+  { path: '/clientsnewform', component: Clientsnewform},
 ];
 
 const router = new VueRouter({ // instancia o router

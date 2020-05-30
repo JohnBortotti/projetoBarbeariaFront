@@ -1,0 +1,102 @@
+<template>
+  <div class="container">
+    <button
+      type="button"
+      class="btn btn-danger col-1 p-1 m-4"
+      v-on:click="function(){$router.push('/clients')}"
+    >Voltar</button>
+    <div class="row justify-content-sm-center">
+      <form class="w-25" @submit.prevent="updateClient(client_id, name, phone, email)">
+        <h3 class="mb-5 text-center">Novo Cliente</h3>
+        <div class="form-group">
+          <label>Nome</label>
+          <input class="form-control" v-model="name" placeholder="insira o nome" required />
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input class="form-control" v-model="phone" placeholder="insira o telefone" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" v-model="email" placeholder="insira o email" required />
+        </div>
+        <div class="row justify-content-md-center">
+          <!-- button wrapper para centralizar o button na div -->
+          <button class="btn btn-primary col-6 m-3">Atualizar</button>
+          <div
+            v-if="success == true"
+            class="alert alert-success text-center"
+            role="alert"
+          >Cliente Atualizado</div>
+          <div
+            v-if="fail == true"
+            class="alert alert-danger text-center"
+            role="alert"
+          >Falha ao atualizar cliente</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Clientsupdateform",
+  data: function() {
+    return {
+      client_id: null,
+      name: null,
+      phone: null,
+      email: null,
+      success: null,
+      fail: null
+    };
+  },
+  methods: {
+    updateClient: function(client_id, name, phone, email) {
+      fetch(`http://localhost:8000/api/client/${client_id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("Jwt")} `,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          client_id: client_id,
+          name: name,
+          phone: phone,
+          email: email
+        })
+      }).then(res => {
+        if (res.status == 404) {
+          this.fail = true;
+          this.success = false;
+        } else {
+            this.success = true;
+            this.fail = false;
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+div {
+  max-width: 100%;
+  max-height: 100% !important;
+  background-color: rgb(247, 247, 247);
+}
+
+@media screen and (max-width: 700px) {
+  form {
+    margin: 0 10%;
+  }
+  .w-25 {
+    width: 100% !important;
+  }
+}
+.btn-danger {
+  width: 100px !important;
+  max-width: 100% !important;
+}
+</style>
