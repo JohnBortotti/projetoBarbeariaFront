@@ -20,9 +20,9 @@
     <h4 class="p-5 text-center text-secondary">Serviços</h4>
     <div class="row justify-content-md-center">
       <!--- button center wrapper -->
-      <button 
+      <button
         type="button"
-        v-on:click="function(){$router.push('/servicesform')}"   
+        v-on:click="function(){$router.push('/servicesform')}"
         class="btn btn-primary col-2 mb-4"
       >Novo Serviço</button>
     </div>
@@ -31,6 +31,7 @@
       <table class="table table-dark w-75 mx-auto">
         <thead>
           <tr>
+            <th scope="col">ID</th>
             <th scope="col">Cliente</th>
             <th scope="col">Profissional</th>
             <th scope="col">Serviço</th>
@@ -39,7 +40,8 @@
             <th scope="col">Horário</th>
             <th scope="col">Controles</th>
           </tr>
-          <tr v-for="service in services" :key="service.id">
+          <tr v-for="service in services" :key="service.id" v-bind:id="service.id">
+            <th scope="col">{{ service.id }}</th>
             <th scope="col">{{ service.client_name }}</th>
             <th scope="col">{{ service.user_name }}</th>
             <th scope="col">{{ service.servico }}</th>
@@ -53,7 +55,11 @@
                   class="btn btn-sm btn-success"
                   style="margin-right: 10px"
                 >Concluido</button>
-                <button type="button" class="btn btn-sm btn-danger">Deletar</button>
+                <button
+                  v-on:click.prevent="deleteService(service.id)"
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                >Deletar</button>
               </div>
             </th>
           </tr>
@@ -101,6 +107,12 @@ export default {
       })
         .then(res => res.json())
         .then(res => (this.services = res)); // Adiciona o array da resosta como valor no services
+    },
+    deleteService: async function(id) {
+      await fetch(this.baseUrl + `service/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      }).then(this.fetchServices);
     }
   },
   mounted: function() {
