@@ -20,13 +20,13 @@
       <button
         type="button"
         v-on:click="function(){$router.push('/clientesnewform')}"
-        id="novoServicoButton"
+        id="updateClientButton"
         class="btn btn-success col-2 mb-4 mr-2"
       >Novo Cliente</button>
       <button
         type="button"
         v-on:click="function(){$router.push('/clientsupdateform')}"
-        id="novoServicoButton"
+        id="newClientButton"
         class="btn btn-info col-2 mb-4"
       >Atualizar Cliente</button>
     </div>
@@ -99,9 +99,24 @@ export default {
 
 <style scoped>
 div {
-    max-width: 100%;
+  max-width: 100%;
 }
 a {
   cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+.row {
+    margin: 0px;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#updateClientButton, #newClientButton {
+    max-width: 80% !important;
+    margin: 0px !important;
+    margin-bottom: 8px !important;
+}
 }
 </style>
