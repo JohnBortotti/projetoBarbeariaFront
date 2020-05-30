@@ -6,7 +6,7 @@
       v-on:click="function(){$router.push('/clients')}"
     >Voltar</button>
     <div class="row justify-content-sm-center">
-      <form class="w-25" @submit.prevent="updateClient(client_id, name, phone, email)">
+      <form class="w-25" @submit.prevent="updateClient(name, phone, email)">
         <h3 class="mb-5 text-center">Novo Cliente</h3>
         <div class="form-group">
           <label>Nome</label>
@@ -22,17 +22,17 @@
         </div>
         <div class="row justify-content-md-center">
           <!-- button wrapper para centralizar o button na div -->
-          <button class="btn btn-primary col-6 m-3">Atualizar</button>
+          <button class="btn btn-primary col-6 m-3">Cadastrar</button>
           <div
             v-if="success == true"
             class="alert alert-success text-center"
             role="alert"
-          >Cliente Atualizado</div>
+          >Cliente Cadastrado</div>
           <div
             v-if="fail == true"
             class="alert alert-danger text-center"
             role="alert"
-          >Falha ao atualizar cliente</div>
+          >Falha ao cadastrar cliente</div>
         </div>
       </form>
     </div>
@@ -41,10 +41,9 @@
 
 <script>
 export default {
-  name: "Clientsupdateform",
+  name: "Clientsnewform",
   data: function() {
     return {
-      client_id: null,
       name: null,
       phone: null,
       email: null,
@@ -53,21 +52,20 @@ export default {
     };
   },
   methods: {
-    updateClient: function(client_id, name, phone, email) {
-      fetch(`http://localhost:8000/api/client/${client_id}`, {
-        method: "PATCH",
+    updateClient: function(name, phone, email) {
+      fetch(`http://localhost:8000/api/client`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("Jwt")} `,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          client_id: client_id,
           name: name,
           phone: phone,
-          email: email
+          email: email,
         })
       }).then(res => {
-        if (res.status == 404) {
+        if (res.status != 201) {
           this.fail = true;
           this.success = false;
         } else {

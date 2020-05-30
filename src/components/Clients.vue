@@ -38,12 +38,23 @@
             <th scope="col">Nome</th>
             <th scope="col">Telefone</th>
             <th scope="col">Email</th>
+            <th scope="col">Controles</th>
           </tr>
           <tr v-for="client in clients" :key="client.id" v-bind:id="client.id">
             <th scope="col">{{ client.id }}</th>
             <th scope="col">{{ client.name }}</th>
             <th scope="col">{{ client.phone }}</th>
             <th scope="col">{{ client.email }}</th>
+            <th scope="col">
+              <div>
+                <button
+                  v-on:click.prevent="deleteClient(client.id)"
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  style="margin-right: 10px"
+                >Deletar</button>
+              </div>
+            </th>
           </tr>
         </thead>
       </table>
@@ -88,6 +99,13 @@ export default {
       })
         .then(res => res.json())
         .then(res => (this.clients = res));
+    },
+    deleteClient: async function(id) {
+      await fetch(this.baseUrl + `client/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      })
+      .then(this.fetchClients)
     }
   },
   mounted: function() {
@@ -106,17 +124,18 @@ a {
 }
 
 @media screen and (max-width: 800px) {
-.row {
+  .row {
     margin: 0px;
     width: 100% !important;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-#updateClientButton, #newClientButton {
+  }
+  #updateClientButton,
+  #newClientButton {
     max-width: 80% !important;
     margin: 0px !important;
     margin-bottom: 8px !important;
-}
+  }
 }
 </style>
