@@ -10,9 +10,6 @@
           <a class="nav-link" href="#">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Usuários</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" v-on:click="logout()">Sair</a>
         </li>
       </ul>
@@ -23,22 +20,29 @@
       <button
         type="button"
         v-on:click="function(){$router.push('/servicesform')}"
+        id="novoServicoButton"
         class="btn btn-primary col-2 mb-4"
       >Novo Serviço</button>
     </div>
     <!--- redireciona para o ServicosForm -->
-    <div class="row justify-content-md-center mt-4 mb-3 align-items-baseline">
+    <div class="row justify-content-md-center spacearound mt-4 mb-3 align-items-baseline" id="filterRow">
       <p>Filtrar por:</p>
-      <div class="form-group col-md-4">
-        <select class="form-control">
+      <form class="form-inline col-md-5" id="filterForm">
+        <select class="form-control mr-1 w-25 formInput">
           <option>Todos</option>
-          <option>Agendados</option>
-          <option>Realizados</option>
+          <option>cliente</option>
+          <option>profissional</option>
+          <option>serviço</option>
+          <option>status</option>
+          <option>data</option>
+          <option>horario</option>
         </select>
-      </div>
+        <input class="form-control w-50 mr-2 formInput" />
+        <button type="button" class="btn btn-dark formInput">Aplicar</button>
+      </form>
     </div>
     <div class="table-responsive-sm">
-      <table class="table table-dark w-75 mx-auto">
+      <table class="table w-75 mx-auto table-dark">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -86,7 +90,8 @@ export default {
   data: function() {
     return {
       baseUrl: "http://localhost:8000/api/",
-      services: []
+      services: [],
+      filtro: null
     };
   },
   methods: {
@@ -155,5 +160,24 @@ nav {
 
 a {
   cursor: pointer;
+}
+
+@media screen and (max-width: 920px) {
+  .row {
+    margin: 0px;
+  }
+  #novoServicoButton {
+    flex: none;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  #filterForm {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .formInput {
+    width: 100% !important;
+    margin: 4px 0;
+  }
 }
 </style>
