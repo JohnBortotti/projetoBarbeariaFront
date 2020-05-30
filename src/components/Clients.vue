@@ -32,12 +32,17 @@
     </div>
     <div class="row justify-content-md-center">
       <div
-      v-if="fail == true"
+        v-if="fail == true"
         class="alert alert-danger w-50"
         role="alert"
       >Não é possivel deletar clientes com serviços registrados!</div>
     </div>
-    <div class="table-responsive-sm">
+    <div v-if="clients.length == 0" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div v-else class="table-responsive-sm">
       <table class="table w-75 mx-auto table-dark">
         <thead>
           <tr>
@@ -76,7 +81,7 @@ export default {
     return {
       baseUrl: "http://localhost:8000/api/",
       clients: [],
-      fail: false,
+      fail: false
     };
   },
   methods: {
@@ -114,7 +119,7 @@ export default {
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
       }).then(res => {
         if (res.status == 500) {
-          this.fail = true
+          this.fail = true;
         } else {
           this.fetchClients();
         }
