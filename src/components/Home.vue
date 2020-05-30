@@ -27,6 +27,16 @@
       >Novo Serviço</button>
     </div>
     <!--- redireciona para o ServicosForm -->
+    <div class="row justify-content-md-center mt-4 mb-3 align-items-baseline">
+      <p>Filtrar por:</p>
+      <div class="form-group col-md-4">
+        <select class="form-control">
+          <option>Todos</option>
+          <option>Agendados</option>
+          <option>Realizados</option>
+        </select>
+      </div>
+    </div>
     <div class="table-responsive-sm">
       <table class="table table-dark w-75 mx-auto">
         <thead>
