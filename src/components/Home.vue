@@ -25,20 +25,27 @@
       >Novo Serviço</button>
     </div>
     <!--- redireciona para o ServicosForm -->
-    <div class="row justify-content-md-center spacearound mt-4 mb-3 align-items-baseline" id="filterRow">
+    <div
+      class="row justify-content-md-center spacearound mt-4 mb-3 align-items-baseline"
+      id="filterRow"
+    >
       <p>Filtrar por:</p>
       <form class="form-inline col-md-5" id="filterForm">
-        <select class="form-control mr-1 w-25 formInput">
+        <select v-model="filter" class="form-control mr-1 w-25 formInput">
           <option>Todos</option>
-          <option>cliente</option>
-          <option>profissional</option>
-          <option>serviço</option>
-          <option>status</option>
-          <option>data</option>
-          <option>horario</option>
+          <option value="clients.name">Cliente</option>
+          <option value="users.name">Profissional</option>
+          <option value="servico">Serviço</option>
+          <option value="status">Status</option>
+          <option value="data">Data</option>
+          <option value="horario">Horario</option>
         </select>
-        <input class="form-control w-50 mr-2 formInput" />
-        <button type="button" class="btn btn-dark formInput">Aplicar</button>
+        <input v-model="filterValue" class="form-control w-50 mr-2 formInput" />
+        <button
+          v-on:click.prevent="filterService(filter, filterValue)"
+          type="button"
+          class="btn btn-dark formInput"
+        >Aplicar</button>
       </form>
     </div>
     <div class="table-responsive-sm">
@@ -91,7 +98,8 @@ export default {
     return {
       baseUrl: "http://localhost:8000/api/",
       services: [],
-      filtro: null
+      filter: null,
+      filterValue: null
     };
   },
   methods: {
@@ -141,6 +149,20 @@ export default {
           status: "realizado"
         })
       }).then(this.fetchServices);
+    },
+    filterService: async function(filter, value) {
+      if (this.filter == "Todos") {
+        this.fetchServices();
+      } else {
+        await fetch(this.baseUrl + `service/search/${filter}/${value}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("Jwt")} `,
+            "Content-Type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(res => (this.services = res));
+      }
     }
   },
   mounted: function() {
