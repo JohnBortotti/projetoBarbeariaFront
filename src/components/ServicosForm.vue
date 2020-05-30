@@ -23,7 +23,7 @@
           <input class="form-control" v-model="servico" placeholder="insira o serviço" required />
         </div>
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Stauts</label>
+          <label for="exampleFormControlSelect1">Status</label>
           <select class="form-control" v-model="status" placeholder="agendado ou realizado">
             <option>agendado</option>
             <option>realizado</option>

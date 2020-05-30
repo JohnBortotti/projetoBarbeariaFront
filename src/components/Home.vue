@@ -51,6 +51,7 @@
             <th scope="col">
               <div>
                 <button
+                  v-on:click.prevent="doneService(service.id)"
                   type="button"
                   class="btn btn-sm btn-success"
                   style="margin-right: 10px"
@@ -112,6 +113,18 @@ export default {
       await fetch(this.baseUrl + `service/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("Jwt")} ` }
+      }).then(this.fetchServices);
+    },
+    doneService: async function(id) {
+      await fetch(this.baseUrl + `service/${id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("Jwt")} `,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          status: "realizado"
+        })
       }).then(this.fetchServices);
     }
   },
