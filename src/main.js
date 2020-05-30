@@ -6,7 +6,7 @@ import App from './App.vue';
 import Login from './components/Login';
 import Home from './components/Home';
 import ServicosForm from './components/ServicosForm';
-
+import Clients from './components/Clients'
 
 // Import the styles directly. (Or you could add them via script tags.)
 import 'bootstrap/dist/css/bootstrap.css';
@@ -20,7 +20,8 @@ Vue.use(VueRouter)
 const routes = [ // define as rotas e os componentes
   { path: '/', component: Login },
   { path: '/home', component: Home },
-  { path: '/servicesform', component: ServicosForm}
+  { path: '/servicesform', component: ServicosForm},
+  { path: '/clients', component: Clients}
 ];
 
 const router = new VueRouter({ // instancia o router
