@@ -61,7 +61,7 @@
             v-if="fail == true"
             class="alert alert-danger text-center"
             role="alert"
-          >Falha ao registrar serviço</div>
+          >Cliente ID não encontrado</div>
         </div>
       </form>
     </div>
@@ -98,7 +98,7 @@ export default {
           horario: horario
         })
       }).then(res => {
-        if (res.body > 1 || res.status != 200) {
+        if (res.status != 201) {
           this.fail = true;
           this.success = false;
         } else {
