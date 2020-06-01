@@ -7,6 +7,7 @@ import Login from './components/Login';
 
 import Home from './components/Home';
 import ServicosForm from './components/ServicosForm';
+import ServicosUpdate from './components/ServicosUpdate';
 
 import Clients from './components/Clients';
 import Clientsupdateform from './components/Clientsupdateform';
@@ -24,6 +25,7 @@ const routes = [ // define as rotas e os componentes
   { path: '/', component: Login },
   { path: '/home', component: Home },
   { path: '/servicesform', component: ServicosForm},
+  { path: '/servicesupdateform', component: ServicosUpdate},
   { path: '/clients', component: Clients},
   { path: '/clientsupdateform', component: Clientsupdateform},
   { path: '/clientsnewform', component: Clientsnewform},

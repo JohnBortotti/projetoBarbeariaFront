@@ -15,14 +15,20 @@
       </ul>
     </nav>
     <h4 class="p-5 text-center text-secondary">Serviços</h4>
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center" id="buttonsRow">
       <!--- button center wrapper -->
       <button
         type="button"
         v-on:click="function(){$router.push('/servicesform')}"
         id="novoServicoButton"
-        class="btn btn-primary col-2 mb-4"
+        class="btn btn-primary col-2 mr-2 mb-4"
       >Novo Serviço</button>
+      <button
+        type="button"
+        v-on:click="function(){$router.push('/servicesupdateform')}"
+        id="updateServicoButton"
+        class="btn btn-info col-2 mb-4"
+      >Atualizar Serviço</button>
     </div>
     <!--- redireciona para o ServicosForm -->
     <div
@@ -197,11 +203,19 @@ a {
   #novoServicoButton {
     flex: none;
     max-width: 80%;
-    margin: 0 auto;
+    margin: 0 !important;
+    margin-bottom: 8px !important;
+  }
+  #updateServicoButton {
+    flex: none;
+    max-width: 80%;
   }
   #filterForm {
     flex-direction: column;
     align-items: flex-start;
+  }
+  #buttonsRow{
+    justify-content: center;
   }
   .formInput {
     width: 100% !important;
