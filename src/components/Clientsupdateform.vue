@@ -42,7 +42,7 @@
             v-if="fail == true"
             class="alert alert-danger text-center"
             role="alert"
-          >Falha ao atualizar cliente</div>
+          >Cliente ID não encontrado</div>
         </div>
       </form>
     </div>
