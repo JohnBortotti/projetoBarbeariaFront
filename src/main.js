@@ -12,7 +12,6 @@ import Clients from './components/Clients/Clients';
 import ClientsUpdateForm from './components/Clients/ClientsUpdateForm/ClientsUpdateForm';
 import ClientsNewForm from './components/Clients/ClientsNewForm/ClientsNewForm';
 // Import the styles directly. (Or you could add them via script tags.)
-import 'bootstrap/dist/css/bootstrap.css';
 
 Vue.config.productionTip = false
 
