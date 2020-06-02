@@ -38,7 +38,7 @@ Nesta tela, já são listados diretamente todos os serviços registrados no banc
 
 <img src='./src/img/homefilters.png' width="400"></a>
 
- O botão "novo serviço" redireciona o usuário para um formulário para inserção de um novo serviço
+ O botão "novo serviço" redireciona o usuário para um formulário para inserção de um novo serviço, e o botão "atualizar serviço" redireciona para um formulário para a atualização de um serviço já registrado
 
 <img src='./src/img/novoservicoform.PNG' width="400"></a>
 
