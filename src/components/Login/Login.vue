@@ -1,36 +1,24 @@
 <template>
-  <div class="container">
-    <nav class="navbar bg-dark text-light">
-      <a class="navbar-brand text-light" href="#">Barbearia
-      </a>
-    </nav>
-    <form class="col-md-5" @submit.prevent="fetchLogin(name, password)">
-      <p class="h4 mb-4 text-center">Login</p>
-      <input
-        v-model="name"
-        type="text"
-        class="form-control form-control-sm mb-2"
-        placeholder="Nome"
-        required
-      />
-      <input
-        v-model="password"
-        type="password"
-        class="form-control form-control-sm mb-2"
-        placeholder="Senha"
-        required
-      />
-      <button
-        class="btn btn-info btn-block my-4 btn-dark"
-        >Logar</button>
-      <div v-if="incorrectLogin == true" class="alert alert-danger text-center" role="alert">Login Incorreto</div>
-    </form>
+  <div class="content">
+    <div class="login-div">
+      <img src="../../img/logo.png" class="logo">
+      <form class="login-form" @submit.prevent="fetchLogin(name, password)">
+        <input v-model="name" type="text" class="form-input" placeholder="Nome" required />
+        <input v-model="password" type="password" class="form-input" placeholder="Senha" required />
+        <button class="form-button">Logar</button>
+        <div
+          v-if="incorrectLogin == true"
+          class="alert alert-danger text-center"
+          role="alert"
+        >Login Incorreto</div>
+      </form>
+    </div>
+    <div class="right-div"></div>
   </div>
 </template>
 
 
 <script>
-
 export default {
   name: "Login",
   data: function() {
@@ -42,7 +30,7 @@ export default {
     };
   },
   methods: {
-        verifyToken: function() {
+    verifyToken: function() {
       // verifica se existem um token, caso exista redireciona para a home
       fetch(this.baseUrl + "auth/me", {
         method: "POST",
@@ -71,8 +59,8 @@ export default {
         .then(res => {
           if (res.access_token) {
             this.incorrectLogin = false;
-            localStorage.setItem('Jwt', res.access_token);
-            this.$router.push('/home');
+            localStorage.setItem("Jwt", res.access_token);
+            this.$router.push("/home");
           } else {
             this.incorrectLogin = true;
           }
@@ -80,30 +68,74 @@ export default {
     }
   },
   mounted: function() {
-    this.verifyToken()
+    this.verifyToken();
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container {
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+
+.content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.login-div {
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: center;
   align-items: center;
+  width: 30%;
+  background-color: rgb(22, 22, 26);
 }
 
-nav {
-  position: absolute;
-  top: 0;
+.logo {
+  width: 50%;
+}
+
+.login-form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+.login-title {
+  color: white;
+  font-size: 1.2em;
+}
+
+.form-input {
+  padding: 4px 15px;
   width: 100%;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.137);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  border: solid 2px rgba(34, 34, 32, 0.616);
 }
 
-@media screen and (max-height: 400px) { /* Oculta a Navbar caso a altura diminua mto, para não quebrar com o form do login */
-  nav { 
-    display: none;
-  }
+.form-button {
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  width: 60%;
+  color: black;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.right-div {
+  width: 80%;
+  background: url("../../img/loginBackground.jpg") rgba(0, 0, 0, 0.884);
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 </style>
