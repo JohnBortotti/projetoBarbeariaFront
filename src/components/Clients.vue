@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <a class="navbar-brand text-light" href="#">Barbearia</a>
+      <div class="navbar-brand text-light" >Barbearia</div>
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" v-on:click="function(){$router.push('/home')}">Serviços</a>
