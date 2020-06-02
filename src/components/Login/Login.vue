@@ -1,15 +1,14 @@
 <template>
   <div class="content">
     <div class="login-div">
-      <img src="../../img/logo.png" class="logo">
+      <img src="../../img/logo.png" class="logo" />
       <form class="login-form" @submit.prevent="fetchLogin(name, password)">
         <input v-model="name" type="text" class="form-input" placeholder="Nome" required />
         <input v-model="password" type="password" class="form-input" placeholder="Senha" required />
         <button class="form-button">Logar</button>
         <div
           v-if="incorrectLogin == true"
-          class="alert alert-danger text-center"
-          role="alert"
+          class="incorrect-login"
         >Login Incorreto</div>
       </form>
     </div>
@@ -75,7 +74,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 .content {
   display: flex;
@@ -110,24 +109,41 @@ export default {
 }
 
 .form-input {
-  padding: 4px 15px;
-  width: 100%;
+  padding: 8px 10px;
+  width: 86%;
   margin-bottom: 20px;
   background-color: rgba(255, 255, 255, 0.137);
   border: none;
   border-radius: 5px;
   color: white;
   border: solid 2px rgba(34, 34, 32, 0.616);
+  transition: 0.3s;
+}
+.form-input:focus {
+  width: 90%;
 }
 
 .form-button {
+  font-family: sans-serif;
   border: none;
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
   width: 60%;
   color: black;
   margin-top: 20px;
+  margin-bottom: 40px;
   background-color: white;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  background-color: rgb(218, 218, 218);
+}
+
+.incorrect-login {
+  font-family: 'Poppins', sans-serif;
+  color: rgb(240, 78, 78);
 }
 
 .right-div {
@@ -137,5 +153,14 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .login-div {
+    width: 100%;
+  }
+  .right-div {
+    display: none;
+  }
 }
 </style>
