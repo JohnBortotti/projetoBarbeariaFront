@@ -21,7 +21,7 @@
         type="button"
         v-on:click="function(){$router.push('/Clientsnewform')}"
         id="updateClientButton"
-        class="btn btn-success col-2 mb-4 mr-2"
+        class="btn btn-primary col-2 mb-4 mr-2"
       >Novo Cliente</button>
       <button
         type="button"
