@@ -1,43 +1,44 @@
 <template>
-  <div>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <div class="navbar-brand text-light" >Barbearia</div>
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Serviços</a>
-        </li>
-        <li class="nav-item">
+  <div class="container">
+    <nav class="navbar">
+      <div class="navbar-items">
+        <div class="nav-item">
+          <img src="../../img/logo.png" id="logo" />
+        </div>
+        <div class="nav-item active">
+          <a class="nav-link">Serviços</a>
+        </div>
+        <div class="nav-item">
           <a class="nav-link" v-on:click="function(){$router.push('/clients')}">Clientes</a>
-        </li>
-        <li class="nav-item">
+        </div>
+        <div class="nav-item quit">
           <a class="nav-link" v-on:click="logout()">Sair</a>
-        </li>
-      </ul>
+        </div>
+      </div>
     </nav>
-    <h4 class="p-5 text-center text-secondary">Serviços</h4>
-    <div class="row justify-content-md-center" id="buttonsRow">
-      <!--- button center wrapper -->
+    <div class="title-div">HOME PAGE</div>
+    <div class="buttons-row">
       <button
         type="button"
         v-on:click="function(){$router.push('/servicesform')}"
         id="novoServicoButton"
-        class="btn btn-primary col-2 mr-2 mb-4"
+        class="table-button"
       >Novo Serviço</button>
       <button
         type="button"
         v-on:click="function(){$router.push('/servicesupdateform')}"
         id="updateServicoButton"
-        class="btn btn-info col-2 mb-4"
+        class="table-button"
       >Atualizar Serviço</button>
     </div>
     <!--- redireciona para o ServicosForm -->
-    <div
-      class="row justify-content-md-center spacearound mt-4 mb-3 align-items-baseline"
-      id="filterRow"
-    >
-      <p>Filtrar por:</p>
-      <form class="form-inline col-md-5" id="filterForm">
-        <select v-model="filter" class="form-control mr-1 w-25 formInput">
+    <div class="filters-row">
+      <p class="filters-title">
+        Filtrar
+        <br />Serviços
+      </p>
+      <form class="filters-form" id="filterForm">
+        <select class="filter-input" id="filter-input-options" v-model="filter">
           <option>Todos</option>
           <option value="clients.name">Cliente</option>
           <option value="users.name">Profissional</option>
@@ -46,58 +47,46 @@
           <option value="data">Data</option>
           <option value="horario">Horario</option>
         </select>
-        <input v-model="filterValue" class="form-control w-50 mr-2 formInput" />
+        <input v-model="filterValue" class="filter-input" id="filter-input-value" />
         <button
           v-on:click.prevent="filterService(filter, filterValue)"
           type="button"
-          class="btn btn-dark formInput"
+          class="filter-button"
         >Aplicar</button>
       </form>
     </div>
-    <div v-if="services.length == 0" class="d-flex justify-content-center">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-    <div v-else class="table-responsive-sm">
-      <table class="table w-75 mx-auto table-dark">
+    <div class="services-counter">{{services.length}} SERVIÇOS</div>
+    <div class="table-div">
+      <table class="main-table">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Profissional</th>
-            <th scope="col">Serviço</th>
-            <th scope="col">Status</th>
-            <th scope="col">Data</th>
-            <th scope="col">Horário</th>
-            <th scope="col">Controles</th>
-          </tr>
-
-          <tr v-for="service in services" :key="service.id" v-bind:id="service.id">
-            <th scope="col">{{ service.id }}</th>
-            <th scope="col">{{ service.client_name }}</th>
-            <th scope="col">{{ service.user_name }}</th>
-            <th scope="col">{{ service.servico }}</th>
-            <th scope="col">{{ service.status }}</th>
-            <th scope="col">{{ service.data}}</th>
-            <th scope="col">{{service.horario}}</th>
-            <th scope="col">
-              <div>
-                <button
-                  v-on:click.prevent="doneService(service.id)"
-                  type="button"
-                  class="btn btn-sm btn-success"
-                  style="margin-right: 10px"
-                >Concluido</button>
-                <button
-                  v-on:click.prevent="deleteService(service.id)"
-                  type="button"
-                  class="btn btn-sm btn-danger"
-                >Deletar</button>
-              </div>
-            </th>
+            <th>Serviço ID</th>
+            <th>Cliente</th>
+            <th>Profissional</th>
+            <th>Serviço</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Controles</th>
           </tr>
         </thead>
+        <tr v-for="service in services" :key="service.id" v-bind:id="service.id">
+          <th>{{ service.id }}</th>
+          <th>{{ service.client_name }}</th>
+          <th>{{ service.user_name }}</th>
+          <th>{{ service.servico }}</th>
+          <th
+            v-bind:class="{ realizado: service.status == 'realizado', agendado:  service.status == 'agendado'}"
+          >{{ service.status }}</th>
+          <th>{{ service.data}}</th>
+          <th>{{service.horario}}</th>
+          <th>
+            <div class="table-controlers-div">
+              <button class="table-controler" v-on:click.prevent="doneService(service.id)">Concluido</button>
+              <button class="table-controler" v-on:click.prevent="deleteService(service.id)">Deletar</button>
+            </div>
+          </th>
+        </tr>
       </table>
     </div>
   </div>
@@ -185,41 +174,238 @@ export default {
 </script>
 
 <style scoped>
-div {
-  max-width: 100%;
-}
-nav {
-  width: 100%;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Smythe&display=swap");
+
+.container {
+  display: flex;
+  height: 100%;
+  color: white;
+  background: url("../../img/skull.png") rgb(17, 16, 16);
+  background-position: start;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  background-size: 600px;
+  flex-direction: column;
+  align-items: center;
 }
 
-a {
+.navbar {
+  display: flex;
+  background-color: rgb(22, 22, 26);
+  width: 100%;
+  height: 8%;
+}
+
+#logo {
+  width: 40px;
+}
+
+.navbar-items {
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.nav-item {
+  margin: 0 10px;
+}
+
+.active {
+  cursor: default;
+  color: #7f5e35;
+}
+.quit {
+  background-color: #a07541;
+  padding: 0 25px;
+  border-radius: 20px;
+}
+
+.title-div {
+  font-family: "Smythe", cursive;
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 90%;
+  height: 10%;
+  font-size: 40px;
+}
+.buttons-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.table-button {
+  transition: 0.3s;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  width: 160px;
+  padding: 12px 18px;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 16px;
+  color: #a07541;
+  border: 2px solid #a07541;
   cursor: pointer;
 }
 
-@media screen and (max-width: 920px) {
-  .row {
-    margin: 0px;
+.table-button:hover {
+  background-color: #a07541;
+  color: white;
+}
+
+.filters-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 160px;
+  background-color: #bd9557;
+  margin-bottom: 40px;
+  background: url("../../img/overlayBackground.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.filters-title {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 26px;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+}
+
+.filters-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-left: 90px;
+}
+
+.filter-input {
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  padding: 5px 30px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.filter-button {
+  cursor: pointer;
+  transition: 0.3s;
+  color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: white;
+  padding: 8px 40px;
+  border-radius: 5px;
+  border: none;
+}
+
+.filter-button:hover {
+  background-color: rgb(228, 222, 222);
+}
+
+.services-counter {
+  font-family: "Smythe", cursive;
+  font-weight: 400;
+  color: white;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.table-div {
+  border: 2px solid rgb(105, 85, 48);
+  width: 80%;
+  padding: 6px;
+  overflow: scroll;
+  margin-bottom: 20px;
+}
+
+.main-table {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  width: 100%;
+  font-size: 17px;
+  border-collapse: collapse;
+  color: white;
+}
+
+thead {
+  font-size: 18px;
+}
+
+th,
+tr {
+  border-bottom: 1px solid #ddd;
+  height: 50px;
+}
+
+.realizado {
+  background-color: rgb(73, 196, 83);
+  color: rgb(13, 92, 13);
+}
+
+.agendado {
+  background-color: rgb(210, 216, 211);
+  color: rgb(22, 24, 22);
+}
+
+.table-controlers-div {
+  display: flex;
+  justify-content: center;
+}
+
+.table-controler {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  cursor: pointer;
+  color: white;
+  border: 1px solid white;
+  border: solid;
+  width: 90px;
+  height: 35px;
+  margin: 0 6px;
+  transition: 0.3s;
+}
+
+.table-controler:hover {
+  background-color: rgb(129, 96, 35);
+  color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .table-button {
+    margin: 20px 5px;
   }
-  #novoServicoButton {
-    flex: none;
-    max-width: 80%;
-    margin: 0 !important;
-    margin-bottom: 8px !important;
+  .filters-title {
+    font-size: 18px;
   }
-  #updateServicoButton {
-    flex: none;
-    max-width: 80%;
+  #filter-input-value {
+    width: 40%;
   }
-  #filterForm {
-    flex-direction: column;
-    align-items: flex-start;
+  #filter-input-options {
+    width: 80%;
   }
-  #buttonsRow{
-    justify-content: center;
+
+  .filters-form {
+    margin-left: 30px;
   }
-  .formInput {
-    width: 100% !important;
-    margin: 4px 0;
+}
+
+@media screen and (max-width: 400px) {
+  .navbar {
+    height: 20%;
+  }
+  .navbar-items {
+    display: inline-block;
   }
 }
 </style>
