@@ -16,6 +16,19 @@
         </div>
       </div>
     </nav>
+     <div v-if="enviado == true || concluido == true || deletado == true" id="overlay"></div>
+    <div v-if="enviado == true" class="notification-alert">
+      <span class="closebtn" v-on:click.prevent="enviado = false" onclick="this.parentElement.style.display='none';">&times;</span>
+      Email de confirmação enviado com sucesso!
+    </div>
+    <div v-if="deletado == true" class="delete-alert">
+      <span class="closebtn" v-on:click.prevent="deletado = false" onclick="this.parentElement.style.display='none';">&times;</span>
+      Serviço deletado com sucesso
+    </div>
+    <div v-if="concluido == true" class="done-alert">
+      <span class="closebtn" v-on:click.prevent="concluido = false" onclick="this.parentElement.style.display='none';">&times;</span>
+      Status do serviço alterado para realizado
+    </div>
     <div class="title-div">HOME PAGE</div>
     <div class="buttons-row">
       <button
@@ -82,8 +95,13 @@
           <th>{{service.horario}}</th>
           <th>
             <div class="table-controlers-div">
-              <button class="table-controler" v-on:click.prevent="doneService(service.id)">Concluido</button>
-              <button class="table-controler" v-on:click.prevent="deleteService(service.id)">Deletar</button>
+              <button
+                class="table-controler"
+                ref="myButton"
+                v-on:click.prevent="notifyClient(service.id); enviado = true"
+              >Notificar</button>
+              <button class="table-controler" v-on:click.prevent="doneService(service.id); concluido = true">Concluido</button>
+              <button class="table-controler" v-on:click.prevent="deleteService(service.id); deletado = true">Deletar</button>
             </div>
           </th>
         </tr>
@@ -100,7 +118,10 @@ export default {
       baseUrl: "http://localhost:8000/api/",
       services: [],
       filter: null,
-      filterValue: null
+      filterValue: null,
+      deletado: false,
+      concluido: false,
+      enviado: false
     };
   },
   methods: {
@@ -150,6 +171,14 @@ export default {
           status: "realizado"
         })
       }).then(this.fetchServices);
+    },
+    notifyClient: function(id) {
+      fetch(this.baseUrl + `email/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("Jwt")} `,
+          "Content-Type": "application/json"
+        }
+      });
     },
     filterService: async function(filter, value) {
       if (this.filter == "Todos") {
@@ -357,6 +386,12 @@ tr {
   color: rgb(22, 24, 22);
 }
 
+.enviado {
+  color: rgb(73, 196, 83);
+  font-family: sans-serif;
+  margin: 15px 0;
+}
+
 .table-controlers-div {
   display: flex;
   justify-content: center;
@@ -379,6 +414,48 @@ tr {
 .table-controler:hover {
   background-color: rgb(129, 96, 35);
   color: black;
+}
+
+.notification-alert, .delete-alert, .done-alert {
+  z-index: 3;
+  position: absolute;
+  font-family: sans-serif;
+  top: 50%;
+  padding: 30px;
+  background-color: #18c259;
+  color: white;
+}
+
+.delete-alert {
+  background-color: rgb(218, 66, 66);
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: rgb(179, 179, 179);
+}
+
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
 }
 
 @media screen and (max-width: 768px) {
