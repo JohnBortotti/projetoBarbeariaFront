@@ -31,7 +31,23 @@
         class="table-button"
       >Atualizar Cliente</button>
     </div>
-    <div v-if="fail == true" class="error">Não é possivel deletar clientes com serviços registrados!</div>
+    <div v-if="fail == true || deleted == true" id="overlay"></div>
+    <div v-if="fail == true" class="fail-alert">
+      <span
+        class="closebtn"
+        v-on:click.prevent="fail = false"
+        onclick="this.parentElement.style.display='none';"
+      >&times;</span>
+      Não é possivel deletar clientes que contenham serviços registrados
+    </div>
+    <div v-if="deleted == true" class="fail-alert">
+      <span
+        class="closebtn"
+        v-on:click.prevent="deleted = false"
+        onclick="this.parentElement.style.display='none';"
+      >&times;</span>
+      Cliente deletado com sucesso
+    </div>
     <div class="table-div">
       <table class="main-table">
         <thead>
@@ -71,7 +87,8 @@ export default {
     return {
       baseUrl: "http://localhost:8000/api/",
       clients: [],
-      fail: false
+      fail: false,
+      deleted: false
     };
   },
   methods: {
@@ -112,6 +129,7 @@ export default {
           this.fail = true;
         } else {
           this.fetchClients();
+          this.deleted = true;
         }
       });
     }
@@ -171,10 +189,41 @@ export default {
   border-radius: 20px;
 }
 
-.error {
-  color: rgb(207, 89, 89);
-  margin-bottom: 10px;
-  font-family: "Poppins", sans-serif;
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+.fail-alert {
+  z-index: 3;
+  position: absolute;
+  font-family: sans-serif;
+  top: 50%;
+  padding: 30px;
+  background-color: rgb(218, 66, 66);
+  color: white;
+}
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: rgb(179, 179, 179);
 }
 
 .title-div {
@@ -260,10 +309,6 @@ tr {
 @media screen and (max-width: 768px) {
   .table-button {
     margin: 20px 5px;
-  }
-
-  .error {
-    text-align: center;
   }
 }
 

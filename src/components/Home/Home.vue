@@ -16,17 +16,29 @@
         </div>
       </div>
     </nav>
-     <div v-if="enviado == true || concluido == true || deletado == true" id="overlay"></div>
+    <div v-if="enviado == true || concluido == true || deletado == true" id="overlay"></div>
     <div v-if="enviado == true" class="notification-alert">
-      <span class="closebtn" v-on:click.prevent="enviado = false" onclick="this.parentElement.style.display='none';">&times;</span>
+      <span
+        class="closebtn"
+        v-on:click.prevent="enviado = false"
+        onclick="this.parentElement.style.display='none';"
+      >&times;</span>
       Email de confirmação enviado com sucesso!
     </div>
     <div v-if="deletado == true" class="delete-alert">
-      <span class="closebtn" v-on:click.prevent="deletado = false" onclick="this.parentElement.style.display='none';">&times;</span>
+      <span
+        class="closebtn"
+        v-on:click.prevent="deletado = false"
+        onclick="this.parentElement.style.display='none';"
+      >&times;</span>
       Serviço deletado com sucesso
     </div>
     <div v-if="concluido == true" class="done-alert">
-      <span class="closebtn" v-on:click.prevent="concluido = false" onclick="this.parentElement.style.display='none';">&times;</span>
+      <span
+        class="closebtn"
+        v-on:click.prevent="concluido = false"
+        onclick="this.parentElement.style.display='none';"
+      >&times;</span>
       Status do serviço alterado para realizado
     </div>
     <div class="title-div">HOME PAGE</div>
@@ -100,8 +112,14 @@
                 ref="myButton"
                 v-on:click.prevent="notifyClient(service.id); enviado = true"
               >Notificar</button>
-              <button class="table-controler" v-on:click.prevent="doneService(service.id); concluido = true">Concluido</button>
-              <button class="table-controler" v-on:click.prevent="deleteService(service.id); deletado = true">Deletar</button>
+              <button
+                class="table-controler"
+                v-on:click.prevent="doneService(service.id); concluido = true"
+              >Concluido</button>
+              <button
+                class="table-controler"
+                v-on:click.prevent="deleteService(service.id); deletado = true"
+              >Deletar</button>
             </div>
           </th>
         </tr>
@@ -416,7 +434,9 @@ tr {
   color: black;
 }
 
-.notification-alert, .delete-alert, .done-alert {
+.notification-alert,
+.delete-alert,
+.done-alert {
   z-index: 3;
   position: absolute;
   font-family: sans-serif;
@@ -453,7 +473,7 @@ tr {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
 }
