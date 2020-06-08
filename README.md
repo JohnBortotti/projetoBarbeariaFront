@@ -28,7 +28,7 @@ Na tela de login, as credenciais do usuário são enviadas para a API, se coinci
 <img src='./src/img/login.PNG' width="400"></a>
 
 * ### Home - Serviços
-Nesta tela, já são listados diretamente todos os serviços registrados no banco em uma tabela, podendo ser filtrado por qualquer um dos filtros indicados, contendo 2 controles, o primeiro "Concluido", altera o status do serviço para 'realizado', já o segundo, como o nome sugere, deleta o resgistro daquele serviço.
+Nesta tela, já são listados diretamente todos os serviços registrados no banco em uma tabela, podendo ser filtrado por qualquer um dos filtros indicados, contendo 3 controles, o primeiro, "Notificar" envia um e-mail de confirmação do agendamento para o cliente, o segundo "Concluido", altera o status do serviço para 'realizado', já o terceiro, como o nome sugere, deleta o resgistro daquele serviço.
 
 <img src='./src/img/home.PNG' width="400"></a>
 
@@ -59,5 +59,5 @@ já o botão "Atualizar Cliente" redireciona o usuário para um formulário para
 * #### Agendamento pelo cliente
 Essa sugestão consiste em implementar um sistema no qual o próprio cliente possa acessar um formulário, preencher seus dados e agendar o serviço desejado, e o serviço automaticamente checaria a disponibilidade, e incluiria o serviço na agenda da barbearia
 
-* #### E-mail de confirmação 
+* #### E-mail de confirmação (Já implementada)
 Essa sugestão consiste em implementar o envio de um e-mail de confirmação para o cliente, confirmando o agendamento do serviço e relembrando o mesmo a comparecer na barbearia para realizar o serviço
